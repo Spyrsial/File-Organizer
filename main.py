@@ -61,15 +61,25 @@ def scan_folder(folder_path):
 
 
 def get_folder_path():
-    pass
+    while True:
+        folder_path = input("Give a folder path to organize: ")
+        if os.path.isdir(folder_path):
+            break
+        else:
+            print("Path isnt valid")
+    return folder_path
 
+                
 
 if __name__ == "__main__":
-    # folder_path = get_folder_path()
-    # is_empty = check_folder(folder_path)
 
-    # if is_empty = False
-    # files = scan_folder(folder_path)
+    #while True:
+    #   folder_path = get_folder_path()
+    #   files = scan_folder(folder_path)
+    #if not files:
+        # print("Folder is empty, try another.")
+    #  else:
+    #      break
 
     # for every file in files
     #   category = categorize_file(file)
