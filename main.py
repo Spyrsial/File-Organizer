@@ -68,20 +68,36 @@ def get_folder_path():
         else:
             print("Path isnt valid")
     return folder_path
+    
 
-                
+def move_file(file, category, folder_path):
+    destination_folder = os.path.join(folder_path, category)#the Complete path of subfolder
+    os.makedirs(destination_folder, exist_ok=True)#create the subfolder but no dublicates
 
+    filename = os.path.basename(file)
+    destination_path = os.path.join(destination_folder, filename)#the Complete path of the file
+
+    base, ext = os.path.splitext(filename) # tuple unpacking 
+    counter = 1
+    while os.path.exists(destination_path): # if there is dublicate in the same path
+        dublicate_filename = f"{base}_{counter}{ext}" 
+        destination_path = os.path.join(destination_folder, dublicate_filename) # the path with the new updated name
+        counter += 1
+
+    shutil.move(file, destination_path)
+
+    
 if __name__ == "__main__":
 
-    #while True:
-    #   folder_path = get_folder_path()
-    #   files = scan_folder(folder_path)
-    #if not files:
-        # print("Folder is empty, try another.")
+    while True:
+       folder_path = get_folder_path()
+       files = scan_folder(folder_path)
+    # if not files:
+    #     print("Folder is empty, try another.")
     #  else:
     #      break
 
     # for every file in files
     #   category = categorize_file(file)
-    #   move_file(file, category)
-    pass
+    #   move_file(file, category, folder_path)
+
