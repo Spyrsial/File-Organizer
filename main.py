@@ -100,4 +100,3 @@ if __name__ == "__main__":
     for file in files:
        category = categorize_file(file)
        move_file(file, category, folder_path)
-
