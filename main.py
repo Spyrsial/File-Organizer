@@ -86,18 +86,18 @@ def move_file(file, category, folder_path):
 
     shutil.move(file, destination_path)
 
-    
+
 if __name__ == "__main__":
 
-    while True:
+    while True: # while loop for asking again and again for a non empty folder
        folder_path = get_folder_path()
        files = scan_folder(folder_path)
-    # if not files:
-    #     print("Folder is empty, try another.")
-    #  else:
-    #      break
+       if not files: # if the folder is empty 
+            print("Folder is empty, try another.")
+       else:
+            break
 
-    # for every file in files
-    #   category = categorize_file(file)
-    #   move_file(file, category, folder_path)
+    for file in files:
+       category = categorize_file(file)
+       move_file(file, category, folder_path)
 
