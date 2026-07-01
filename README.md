@@ -45,7 +45,7 @@ The script then sorts every file in that folder into its category subfolder.
 
 > **Warning:** This tool moves files. Always test it on a throwaway folder before running it on a directory you care about.
 
-## Example:
+## Example
 
 **Before:**
 
