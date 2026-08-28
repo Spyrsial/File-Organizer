@@ -4,7 +4,7 @@
 import os
 import shutil
 
-
+# keys must be lowercase
 EXTENSION_MAP = {
     # Documents
     ".pdf": "Documents",
@@ -47,13 +47,13 @@ EXTENSION_MAP = {
 }
 
 
-def categorize_file(filename):
+def categorize_file(filename: str) -> str:
     """Return the category associated with a file's extension."""
-    ext = os.path.splitext(filename)[1]
+    ext = os.path.splitext(filename)[1].lower()
     return EXTENSION_MAP.get(ext, "Other")
 
 
-def scan_folder(folder_path):
+def scan_folder(folder_path: str) -> list[str]:
     """Return the full paths of all files directly inside a folder."""
     file_list = []
 
@@ -64,10 +64,10 @@ def scan_folder(folder_path):
         if os.path.isfile(full_path):
             file_list.append(full_path)
 
-    return file_list
+    return file_list 
 
 
-def get_folder_path():
+def get_folder_path() -> str:
     """Prompt the user until a valid directory path is provided."""
     while True:
         folder_path = input("Give a folder path to organize: ")
@@ -78,7 +78,7 @@ def get_folder_path():
         print("Path isn't valid.")
 
 
-def move_file(file_path, category, folder_path):
+def move_file(file_path: str, category: str, folder_path: str) -> None:
     """Move a file into its category folder without overwriting existing files."""
     destination_folder = os.path.join(folder_path, category)
     os.makedirs(destination_folder, exist_ok=True)
@@ -116,4 +116,7 @@ if __name__ == "__main__":
 
     for file_path in files:
         category = categorize_file(file_path)
-        move_file(file_path, category, folder_path)
+        try:
+            move_file(file_path, category, folder_path)
+        except OSError as e:
+            print(f"Failed to move {file_path}: {e}")
