@@ -5,7 +5,7 @@ import os
 import shutil
 
 # keys must be lowercase
-EXTENSION_MAP = {
+EXTENSION_MAP: dict[str, str]= {
     # Documents
     ".pdf": "Documents",
     ".doc": "Documents",
@@ -102,9 +102,7 @@ def move_file(file_path: str, category: str, folder_path: str) -> None:
     shutil.move(file_path, destination_path)
 
 
-if __name__ == "__main__":
-
-    # Keep asking until the user selects a folder containing at least one file.
+def main():
     while True:
         folder_path = get_folder_path()
         files = scan_folder(folder_path)
@@ -120,3 +118,7 @@ if __name__ == "__main__":
             move_file(file_path, category, folder_path)
         except OSError as e:
             print(f"Failed to move {file_path}: {e}")
+
+
+if __name__ == "__main__":
+    main()
