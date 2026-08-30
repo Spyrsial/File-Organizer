@@ -3,6 +3,7 @@
 # based on their file extensions.
 import os
 import shutil
+import sys
 
 # keys must be lowercase
 EXTENSION_MAP: dict[str, str]= {
@@ -60,7 +61,7 @@ def scan_folder(folder_path: str) -> list[str]:
     for filename in os.listdir(folder_path):
         full_path = os.path.join(folder_path, filename)
 
-        # Ignore subdirectories; only organize files in the target folder.
+        # Ignore subdirectories, only organize files in the target folder.
         if os.path.isfile(full_path):
             file_list.append(full_path)
 
@@ -75,7 +76,7 @@ def get_folder_path() -> str:
         if os.path.isdir(folder_path):
             return folder_path
 
-        print("Path isn't valid.")
+        print("Path isn't valid.", file=sys.stderr)
 
 
 def move_file(file_path: str, category: str, folder_path: str) -> None:
@@ -89,8 +90,7 @@ def move_file(file_path: str, category: str, folder_path: str) -> None:
     base, ext = os.path.splitext(filename)
     counter = 1
 
-    # Preserve existing files by generating names such as file_1.pdf,
-    # file_2.pdf, etc.
+    #Preserve existing files by generating names such as file_1.pdf, file_2.pdf,etc.
     while os.path.exists(destination_path):
         duplicate_filename = f"{base}_{counter}{ext}"
         destination_path = os.path.join(
@@ -102,13 +102,13 @@ def move_file(file_path: str, category: str, folder_path: str) -> None:
     shutil.move(file_path, destination_path)
 
 
-def main():
+def main() -> None:
     while True:
         folder_path = get_folder_path()
         files = scan_folder(folder_path)
 
         if not files:
-            print("Folder is empty, try another.")
+            print("Folder is empty, try another.", file=sys.stderr)
         else:
             break
 
@@ -117,7 +117,7 @@ def main():
         try:
             move_file(file_path, category, folder_path)
         except OSError as e:
-            print(f"Failed to move {file_path}: {e}")
+            print(f"Failed to move {file_path}: {e}", file=sys.stderr)
 
 
 if __name__ == "__main__":
